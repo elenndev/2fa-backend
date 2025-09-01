@@ -10,7 +10,7 @@ export class Usercontroller {
     @Body('username') username: string,
     @Body('email') email: string,
     @Body('contactNumber') contactNumber: string) {
-    return this.userService.create(username, email, contactNumber)
+    return this.userService.create(username, email, contactNumber);
   }
 
   @Get()
