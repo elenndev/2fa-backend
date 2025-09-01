@@ -5,6 +5,7 @@ export class Email {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!regex.test(value)) {
+      console.log('email', value)
       throw new Error('Invalid email');
     }
 

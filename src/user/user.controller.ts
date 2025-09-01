@@ -7,9 +7,9 @@ export class Usercontroller {
 
   @Post()
   async create(
-    @Body('username') username: string,
-    @Body('email') email: string,
-    @Body('contactNumber') contactNumber: string) {
+    @Body() body: { username: string; email: string; contactNumber: string }
+  ) {
+    const { username, email, contactNumber } = body
     return this.userService.create(username, email, contactNumber);
   }
 
