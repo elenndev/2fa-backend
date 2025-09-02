@@ -19,9 +19,17 @@ export class Usercontroller {
   }
 
   @Put('/update-contactNumber/:id')
-  async updateEmail(
+  async updateContactNumber(
     @Param('id') id: number,
     @Body('contactNumber') contactNumber: string) {
     return this.userService.changeContactNumber(id, contactNumber);
+  }
+
+  @Put('/update-email/:id')
+  async updateEmail(
+    @Param('id') id: number,
+    @Body('email') email: string,
+  ) {
+    return this.userService.changeEmail(id, email);
   }
 }

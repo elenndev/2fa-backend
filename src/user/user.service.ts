@@ -41,13 +41,13 @@ export class UserService {
     try {
       const newContactNumber = new ContactNumber(contactNumber);
 
-      const updatedUser = await this.userRepo.findOneBy({ id })
-      if (!updatedUser) {
+      const user = await this.userRepo.findOneBy({ id })
+      if (!user) {
         throw new Error("User not found");
       }
 
-      updatedUser.contactNumber = newContactNumber.getValue();
-      await this.userRepo.save(updatedUser)
+      user.contactNumber = newContactNumber.getValue();
+      await this.userRepo.save(user)
 
     } catch (err) {
       throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
@@ -55,11 +55,20 @@ export class UserService {
   }
 
 
-  async changeEmaik(id: number, email: string) {
-    // try {
-    //   const newEmail = new Email(email);
-    //
-    //   return this.
-    // }
+  async changeEmail(id: number, email: string) {
+    try {
+      const newEmail = new Email(email);
+
+      const user = await this.userRepo.findOneBy(({ id }));
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      user.email = newEmail.getValue();
+      await this.userRepo.save(user);
+
+    } catch (err) {
+      throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }
