@@ -27,13 +27,39 @@ export class UserService {
 
       return this.userRepo.save(newUser);
 
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    } catch (err) {
+      throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
     }
 
   }
 
   async findAll() {
     return this.userRepo.find();
+  }
+
+  async changeContactNumber(id: number, contactNumber: string) {
+    try {
+      const newContactNumber = new ContactNumber(contactNumber);
+
+      const updatedUser = await this.userRepo.findOneBy({ id })
+      if (!updatedUser) {
+        throw new Error("User not found");
+      }
+
+      updatedUser.contactNumber = newContactNumber.getValue();
+      await this.userRepo.save(updatedUser)
+
+    } catch (err) {
+      throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+
+  async changeEmaik(id: number, email: string) {
+    // try {
+    //   const newEmail = new Email(email);
+    //
+    //   return this.
+    // }
   }
 }
