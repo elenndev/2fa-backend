@@ -13,4 +13,7 @@ export class User {
 
   @Column('text')
   contactNumber: string;
+
+  @Column('text')
+  password: string;
 }

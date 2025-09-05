@@ -7,10 +7,10 @@ export class Usercontroller {
 
   @Post()
   async create(
-    @Body() body: { username: string; email: string; contactNumber: string }
+    @Body() body: { username: string; email: string; contactNumber: string, password: string }
   ) {
-    const { username, email, contactNumber } = body
-    return this.userService.create(username, email, contactNumber);
+    const { username, email, contactNumber, password } = body
+    return this.userService.create(username, email, contactNumber, password);
   }
 
   @Get()
@@ -32,4 +32,12 @@ export class Usercontroller {
   ) {
     return this.userService.changeEmail(id, email);
   }
+
+  @Post('/login')
+  async login(
+    @Body() body: { username: string; password: string }) {
+    const { username, password } = body;
+    return this.userService.login(username, password);
+  }
+
 }
