@@ -40,4 +40,13 @@ export class Usercontroller {
     return this.userService.login(username, password);
   }
 
+  // receive pin and validate on otpservice
+  @Post('/validate-auth')
+  async validateAuth(
+    @Body('username') username: string,
+    @Body('pin') pin: string,
+  ) {
+    return this.userService.validateOtp(username, pin);
+  }
+
 }

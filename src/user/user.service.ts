@@ -8,13 +8,15 @@ import { Username } from "./classes/Username";
 import { sendEmail } from "src/common/resend";
 import { Password } from "./classes/Password";
 import { comparePassword } from "src/common/bcrypt";
+import { generateRandomPin } from "src/common/generateRandomPin";
+import { OTPService } from "src/OTP/otp.service";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private userRepo: Repository<User>
-  ) { }
+    private userRepo: Repository<User>,
+    private otpService: OTPService) { }
 
   async create(username: string, email: string, contactNumber: string, password: string) {
     try {
@@ -92,22 +94,24 @@ export class UserService {
         throw new Error('Wrong credentials')
       }
 
+      // 2fa - generate otp and send to user's email
+      // first check if there's already some otp for this user, then delete
+      const existingOtp = await this.otpService.search(username);
+      if (existingOtp) {
+        await this.otpService.delete(username);
+      }
+
+      const pin = await this.otpService.create(username);
+      await sendEmail(user.email, `this is your pin: ${pin}`)
+
     } catch (err) {
       throw new HttpException(err.message, HttpStatus.BAD_REQUEST)
     }
+
   }
 
-  // confirm auth
-  async confirmEmail(id: number) {
-    try {
-      const user = await this.userRepo.findOneBy(({ id }));
-      if (!user) {
-        throw new Error("User not found");
-      }
-
-      await sendEmail(user.email);
-    } catch (err) {
-      throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
-    }
+  async validateOtp(username: string, pin: string) {
+    await this.otpService.validate(username, pin);
   }
+
 }
