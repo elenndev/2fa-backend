@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Param, Post, Put } from "@nestjs/common";
 import { UserService } from "./user.service";
 
 @Controller('users')
@@ -11,19 +11,6 @@ export class Usercontroller {
   ) {
     const { username, email, password } = body
     return this.userService.create(username, email, password);
-  }
-
-  @Get()
-  async returnAll() {
-    return this.userService.findAll();
-  }
-
-  @Put('/update-email/:id')
-  async updateEmail(
-    @Param('id') id: number,
-    @Body('email') email: string,
-  ) {
-    return this.userService.changeEmail(id, email);
   }
 
   @Post('/login')
