@@ -7,22 +7,15 @@ export class Usercontroller {
 
   @Post()
   async create(
-    @Body() body: { username: string; email: string; contactNumber: string, password: string }
+    @Body() body: { username: string; email: string; password: string }
   ) {
-    const { username, email, contactNumber, password } = body
-    return this.userService.create(username, email, contactNumber, password);
+    const { username, email, password } = body
+    return this.userService.create(username, email, password);
   }
 
   @Get()
   async returnAll() {
     return this.userService.findAll();
-  }
-
-  @Put('/update-contactNumber/:id')
-  async updateContactNumber(
-    @Param('id') id: number,
-    @Body('contactNumber') contactNumber: string) {
-    return this.userService.changeContactNumber(id, contactNumber);
   }
 
   @Put('/update-email/:id')
