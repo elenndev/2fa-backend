@@ -5,11 +5,11 @@ A Backend application that register users and implements a 2FA login using the u
 - Typescript
 - [NestJs](https://docs.nestjs.com/)
 - [TypeORM](https://typeorm.io/)
-- [Resend](https://resend.com/)
+- [Nodemailer](https://nodemailer.com/)
 
 # Installation
 1. Clone the repository:  
-`https://github.com/elenndev/2fa-backend.git`
+`git clone https://github.com/elenndev/2fa-backend.git`
 2. Install the dependencies:  
 `npm i`
 
