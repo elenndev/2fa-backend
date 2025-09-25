@@ -7,14 +7,16 @@ import { Username } from "./classes/Username";
 import { Password } from "./classes/Password";
 import { comparePassword } from "src/common/bcrypt";
 import { OTPService } from "src/OTP/otp.service";
-import { sendEmail } from "src/common/emailSender";
+import { MailService } from "src/mail/mail.service";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepo: Repository<User>,
-    private otpService: OTPService) { }
+
+    private otpService: OTPService,
+    private mailService: MailService) { }
 
   async create(username: string, email: string, password: string) {
     try {
@@ -81,7 +83,7 @@ export class UserService {
       }
 
       const pin = await this.otpService.create(username);
-      await sendEmail(user.email, `this is your pin: ${pin}`)
+      await this.mailService.sendEmail(user.email, `this is your pin: ${pin}`)
 
     } catch (err) {
       throw new HttpException(err.message, HttpStatus.BAD_REQUEST)

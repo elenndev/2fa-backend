@@ -17,13 +17,11 @@ A Backend application that register users and implements a 2FA login using the u
 Run the project using: `npm run start:dev`, the application will be running on: `http://localhost:3000/`.
 
 ## Setting email sending service environment
-The easiest and quickest tool to get ready for use that i found to use in this project is [Resend](https://resend.com/), you just need to create an account and they give you a quick start so you can get your API KEY and put it in the `.env` (check the `.envExample`).  
-You can still change and use your preferred tool to send the email, just change the code in the `emailSender.ts` file.
-```
-src/
-├─ common/
-│  ├─ emailSender.ts
-```
+This application uses [Nodemailer](https://nodemailer.com/) to send the emails with Gmail as a service, so you need to get your gmail app password, just follow this steps:
+- Go to [https://myaccount.google.com/security](https://myaccount.google.com/security)
+- Go to or search for 'App password'
+- Choose the name of your app password and copy your new generated app password
+
 
 ***
 ## Creating an user
