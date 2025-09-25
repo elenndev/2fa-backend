@@ -1,6 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { sendEmail } from './common/emailSender';
 
 @Controller()
 export class AppController {
@@ -8,7 +7,6 @@ export class AppController {
 
   @Get()
   async getHello(): Promise<string> {
-    await sendEmail("teste", "teste")
     return this.appService.getHello();
   }
 }
